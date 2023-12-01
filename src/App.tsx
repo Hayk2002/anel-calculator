@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Switch } from "antd";
+import { CalcSwitcher, Wrapper } from "./components/styled";
+import Screen from "./components/Screen";
+import ButtonBox from "./components/ButtonBox";
+import CalcProvider from "./store/CalcContenxt";
+import {useState} from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    const [isAdvanced, setIsAdvanced] = useState<boolean>(false);
+
+    const handleSwitch = () => {
+        setIsAdvanced((prev) => !prev);
+    };
+
+    return (
+      <CalcProvider>
+          <CalcSwitcher>
+              <p>Classic</p>
+              <Switch checked={isAdvanced} onClick={handleSwitch}/>
+              <p>Advanced</p>
+          </CalcSwitcher>
+          <Wrapper>
+              <Screen />
+              <ButtonBox isAdvanced={isAdvanced}/>
+          </Wrapper>
+      </CalcProvider>
+    );
 }
 
 export default App;
